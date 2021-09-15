@@ -6,9 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import com.example.socialmediaapp.daos.UserDao
-import com.example.socialmediaapp.models.Users
+import com.example.socialmediaapp.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -20,9 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.ktx.Firebase
-import com.squareup.okhttp.Dispatcher
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -72,7 +69,6 @@ class Sign_in_activity : AppCompatActivity() {
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSigninResult(task)
-
         }
     }
 
@@ -99,9 +95,9 @@ class Sign_in_activity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("RestrictedApi")
+//    @SuppressLint("RestrictedApi")
     private fun updateUI(firebaseUser: FirebaseUser?) = if(firebaseUser!=null){
-        var user = Users(firebaseUser.uid, firebaseUser.displayName.toString(),firebaseUser.photoUrl.toString())
+        var user = User(firebaseUser.uid, firebaseUser.displayName.toString(),firebaseUser.photoUrl.toString())
         val usersdao = UserDao()
         usersdao.addUser(user)
 
